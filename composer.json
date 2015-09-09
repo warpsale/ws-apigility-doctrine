@@ -1,0 +1,25 @@
+{
+    "name": "warpsale/ws-apigility-doctrine",
+    "description": "Warpsale Doctrine integration with Apigility",
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "Warpsale",
+            "email": "warpsale@warpsale.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "version": "0.1.1-dev", 
+    "require": {
+        "php": ">=5.4.0", 
+	"zendframework/zend-paginator": "2.5.1", 
+	"doctrine/orm": "2.5.1", 
+    	"xiag/rql-parser": "v1.0.1",
+    	"xiag/rql-command": "v1.0.1"
+    }, 
+    "autoload": {
+        "psr-0": {
+            "WSApigilityDoctrine": "src/"
+        }
+    }
+}

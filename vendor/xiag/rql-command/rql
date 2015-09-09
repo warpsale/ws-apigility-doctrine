@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+use Xiag\Rql\Command\LexerCommand;
+use Xiag\Rql\Command\ParserCommand;
+use Symfony\Component\Console\Application;
+
+$files = [__DIR__ . '/vendor/autoload.php', __DIR__ . '/../../autoload.php'];
+foreach ($files as $file) {
+    if (file_exists($file)) {
+        $loader = require $file;
+        break;
+    }
+}
+if (!$loader) {
+    throw new RuntimeException('vendor/autoload.php could not be found');
+}
+
+$application = new Application();
+$application->add(new LexerCommand);
+$application->add(new ParserCommand);
+$application->run();
