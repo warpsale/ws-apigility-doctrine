@@ -612,12 +612,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "622cdc7c8406faa5adfe6fa45d24434f7bb72fff"
+                "reference": "76dba9c12e9a4f75c362029487ece06f72cd9618"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/622cdc7c8406faa5adfe6fa45d24434f7bb72fff",
-                "reference": "622cdc7c8406faa5adfe6fa45d24434f7bb72fff",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/76dba9c12e9a4f75c362029487ece06f72cd9618",
+                "reference": "76dba9c12e9a4f75c362029487ece06f72cd9618",
                 "shasum": ""
             },
             "require": {
@@ -661,7 +661,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-03 11:42:45"
+            "time": "2015-09-09 18:05:45"
         },
         {
             "name": "xiag/rql-command",

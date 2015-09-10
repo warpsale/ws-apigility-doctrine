@@ -2,6 +2,7 @@
 namespace WSApigilityDoctrine;
 
 use Zend\Paginator\Adapter\AdapterInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use WSApigilityDoctrine\_Adapter\DoctrinePaginator;
 use WSApigilityDoctrine\_Adapter\DoctrineQueryRql;
 use WSApigilityDoctrine\_Adapter\DoctrineSort;
@@ -11,7 +12,7 @@ class DoctrineAdapter implements AdapterInterface
     protected $array = null;
     protected $count = null;
 
-    public function __construct($qb, $params, $results)
+    public function __construct($qb, $fields, $params, $results)
     {
         // QUERY
         $rql = isset($params['query']) ? $params['query'] : NULL;
@@ -28,19 +29,30 @@ class DoctrineAdapter implements AdapterInterface
         }
         
         // LIMIT AND OFFSET
+        $platform = $qb->getEntityManager()->getConnection()->getDatabasePlatform()->getName();
         $results = isset($params['results']) && intval($params['results']) > 0 ? $params['results'] : $results;
         $page = isset($params['page']) && intval($params['page']) > 0 ? $params['page'] : 1;
-        if ($results && $page) {
-            $dp = new DoctrinePaginator($qb, $results, $page);
+        
+        if ($platform && $results && $page) {
+            $dp = new DoctrinePaginator($platform, $qb, $results, $page);
             $qb = $dp->getUpdatedQueryBuilder();
         }
 
-        $data = $qb->getQuery()
-                    ->getArrayResult();
-
-        $this->count = count($data) > 0 ? $data[0]['TCount'] : 0; 
-        array_walk($data, function(&$row){ unset($row['TCount']); });
-        $this->array = $data;
+        $query = $qb->getQuery();
+        $data = $query->getArrayResult();
+        
+        $this->count = count($data) < 1 ? 0 : ($platform == 'postgresql' ? $data[0]['TCount'] : count(new Paginator($query, $fetchJoinCollection = true)));
+        
+        // FIELDS VISIBILITY FILTER
+        for ($i=0; $i<count($data); $i++) {
+            foreach ($data[$i] as $k => $v) {
+                if (!in_array($k, $fields)) {
+                    unset($data[$i][$k]);
+                }
+            }
+        }
+        
+        $this->array = $data;    
     }
     
     /**
