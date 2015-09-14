@@ -14,26 +14,26 @@ Setup:
  * Copy the "_utils/module/Base" folder to the "/module" folder of Apigility;
  * Add the "Base" module to the "/config/modules.config.php" Apigility file;
  * Append to the "/config/autoload/local.php" Apigility file:
- 	```php
-     'doctrine' => array(
-        'connection' => array(
-            'orm_default' => array(
-                'driverClass' => 'Doctrine\\DBAL\\Driver\\PDOPgSql\\Driver',
-                'params' => array(
-                    'host' => 'hostname',
-                    'port' => '5432',
-                    'user' => 'username',
-                    'password' => 'password',
-                    'dbname' => 'database',
-                ),
-            ),
+ ```php
+ 'doctrine' => array(
+ 'connection' => array(
+    'orm_default' => array(
+        'driverClass' => 'Doctrine\\DBAL\\Driver\\PDOPgSql\\Driver',
+        'params' => array(
+            'host' => 'hostname',
+            'port' => '5432',
+            'user' => 'username',
+            'password' => 'password',
+            'dbname' => 'database',
         ),
-    'hydrators' => [
-        'initializers' => [
-            'Base\V1\Model\BaseHydratorInitializer',
-        ],
-    ],
- 	```
+    ),
+),
+'hydrators' => [
+'initializers' => [
+    'Base\V1\Model\BaseHydratorInitializer',
+],
+],
+ ```
  * Create a new API (Geo, for example).
  * Create a new REST Service (Region, for example)
  * Create the folder "Model" inside the "/module/Geo/src/Geo/V1" Apigility folder and Copy your Doctrine Entity Files. Region.php example:
@@ -191,7 +191,7 @@ class Region extends BaseReadEntity
 * Save;
 * Create the file "RegionMapper.php" inside the "/module/Geo/src/Geo/V1/Rest/Region" Apigility folder;
 * Write the following code:
-```php
+ ```php
 <?php
 namespace Geo\V1\Rest\Region;
 
@@ -247,21 +247,21 @@ class RegionMapper implements ReadMapperInterface
         return new RegionCollection($adapter);
     }
 }
-```
+ ```
 * edit the "/module/Geo/src/Geo/V1/Rest/Region/RegionResource.php" Apigility file and:
 	* create the "mapper" protected propety:
-	```php
+ ```php
     protected $mapper;
-    ```
+ ```
 	* create a constructor:
-	```php
+ ```php
     public function __construct(RegionMapper $mapper)
     {
         $this->mapper = $mapper;
     }
-    ```
+ ```
 	* change the "GET" methods:
-	```php
+ ```php
     /**
      * Fetch a resource
      *
@@ -283,9 +283,9 @@ class RegionMapper implements ReadMapperInterface
     {
         return $this->mapper->fetchAll($params);
     }
-	```
+ ```
 * edit the "/module/Geo/src/Geo/V1/Rest/Region/RegionResourceFactory.php" Apigility file:
-```php
+ ```php
 <?php
 namespace Geo\V1\Rest\Region;
 
@@ -302,7 +302,7 @@ class RegionResourceFactory
         return new RegionResource($mapper);
     }
 }
-```
+ ```
 * Test results (example):
 	* http://api.localhost/region/200
 	* http://api.localhost/region?query=like(name,Europe)&sort=-id&results=5
