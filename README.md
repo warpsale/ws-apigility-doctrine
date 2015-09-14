@@ -14,6 +14,7 @@ Setup:
  * Copy the "_utils/module/Base" folder to the "/module" folder of Apigility;
  * Add the "Base" module to the "/config/modules.config.php" Apigility file;
  * Append to the "/config/autoload/local.php" Apigility file:
+
  ```php
  'doctrine' => array(
  'connection' => array(
@@ -34,9 +35,11 @@ Setup:
 ],
 ],
  ```
+
  * Create a new API (Geo, for example).
  * Create a new REST Service (Region, for example)
  * Create the folder "Model" inside the "/module/Geo/src/Geo/V1" Apigility folder and Copy your Doctrine Entity Files. Region.php example:
+
  ```php
  <?php
 namespace Geo\V1\Model;
@@ -164,7 +167,9 @@ class Region extends BaseReadEntity
     }
 }
  ```
+
  * append to the "/module/Geo/config/module.config.php" file:
+
  ```php
  'doctrine' => array(
     'driver' => array(
@@ -183,6 +188,7 @@ class Region extends BaseReadEntity
     ),
 ), 
  ```
+
  * Apply the "DoctrineModule\Stdlib\Hydrator\DoctrineObject" to the "Hydrator Service Name"
  * Add "page", "query" and "sort" words to the "Collection Query String Whitelist";
 * Change the "Entity Class" to "Geo\V1\Model\Region" and, after the service created, delete the file "/module/Geo/src/Geo/V1/Rest/Region/RegionEntity.php" of Apigility;
@@ -191,6 +197,7 @@ class Region extends BaseReadEntity
 * Save;
 * Create the file "RegionMapper.php" inside the "/module/Geo/src/Geo/V1/Rest/Region" Apigility folder;
 * Write the following code:
+
  ```php
 <?php
 namespace Geo\V1\Rest\Region;
@@ -248,19 +255,25 @@ class RegionMapper implements ReadMapperInterface
     }
 }
  ```
+
 * edit the "/module/Geo/src/Geo/V1/Rest/Region/RegionResource.php" Apigility file and:
 	* create the "mapper" protected propety:
+
  ```php
     protected $mapper;
  ```
+
 	* create a constructor:
+
  ```php
     public function __construct(RegionMapper $mapper)
     {
         $this->mapper = $mapper;
     }
  ```
+
 	* change the "GET" methods:
+
  ```php
     /**
      * Fetch a resource
@@ -284,7 +297,9 @@ class RegionMapper implements ReadMapperInterface
         return $this->mapper->fetchAll($params);
     }
  ```
+
 * edit the "/module/Geo/src/Geo/V1/Rest/Region/RegionResourceFactory.php" Apigility file:
+
  ```php
 <?php
 namespace Geo\V1\Rest\Region;
@@ -303,6 +318,7 @@ class RegionResourceFactory
     }
 }
  ```
+
 * Test results (example):
 	* http://api.localhost/region/200
 	* http://api.localhost/region?query=like(name,Europe)&sort=-id&results=5
