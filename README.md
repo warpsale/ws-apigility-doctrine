@@ -28,12 +28,12 @@ Setup:
             'dbname' => 'database',
         ),
     ),
-),
-'hydrators' => [
-'initializers' => [
-    'Base\V1\Model\BaseHydratorInitializer',
-],
-],
+ ),
+ 'hydrators' => [
+    'initializers' => [
+        'Base\V1\Model\BaseHydratorInitializer',
+     ],
+ ],
  ```
 
  * Create a new API (Geo, for example).
